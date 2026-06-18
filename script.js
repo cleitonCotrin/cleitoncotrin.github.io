@@ -477,6 +477,42 @@ function renderTopScorers() {
   `;
 }
 
+function getTodayBRT() {
+  const now = new Date();
+  const brt = new Date(now.getTime() - 3 * 3600000);
+  const y = brt.getUTCFullYear();
+  const mo = String(brt.getUTCMonth() + 1).padStart(2, '0');
+  const d = String(brt.getUTCDate()).padStart(2, '0');
+  return `${y}-${mo}-${d}`;
+}
+
+function renderTodayMatches() {
+  const container = document.getElementById('todayMatches');
+  const section = document.getElementById('todaySection');
+  if (!container || !section) return;
+  const today = getTodayBRT();
+  const matches = state.data.filter(m => m.brtDate === today);
+  if (matches.length === 0) { section.style.display = 'none'; return; }
+  section.style.display = 'block';
+  container.innerHTML = matches.sort((a, b) => (a.time || '').localeCompare(b.time || '')).map(m => {
+    const live = isLiveMatch(m.raw);
+    const past = !!m.score;
+    const scoreText = m.score ? `${m.score.home} - ${m.score.away}` : 'x';
+    const scoreClass = m.score ? '' : 'match-score--tbd';
+    let classes = 'today-card';
+    if (live) classes += ' today-card--live';
+    else if (past) classes += ' today-card--past';
+    return `
+      <a href="jogo.html?slug=${encodeURIComponent(m.slug)}" class="${classes}" aria-label="${m.home} × ${m.away} — ${scoreText}">
+        <span class="today-team"><span class="today-flag" aria-hidden="true">${getFlag(m.home)}</span> ${m.home}</span>
+        <span class="today-score ${scoreClass}">${scoreText}</span>
+        <span class="today-team"><span class="today-flag" aria-hidden="true">${getFlag(m.away)}</span> ${m.away}</span>
+        <span class="today-time ${live ? 'today-time--live' : ''}">${live ? 'Ao Vivo' : (m.timeLabel || '—')}</span>
+      </a>
+    `;
+  }).join('');
+}
+
 function renderStats() {
   const container = document.getElementById('statsGrid');
   const played = state.data.filter(m => m.score);
@@ -506,8 +542,6 @@ function renderStats() {
     if (m.score.away === 0) cleanSheets[m.home] = (cleanSheets[m.home] || 0) + 1;
   });
   const topCleanSheets = Object.entries(cleanSheets).sort((a, b) => b[1] - a[1]).slice(0, 3);
-
-  const totalCards = Math.floor(played.length * 2.3);
 
   container.innerHTML = `
     <div class="stat-card">
@@ -554,12 +588,6 @@ function renderStats() {
           <li><span class="team-info"><span class="team-flag">${getFlag(team)}</span> ${team}</span><span class="stat-num">${wins}</span></li>
         `).join('')}
       </ul>
-    </div>
-    <div class="stat-card">
-      <span class="stat-card-icon">🟨</span>
-      <div class="stat-card-title">Cartões</div>
-      <div class="stat-card-value">${totalCards}</div>
-      <div class="stat-card-desc">Estimativa baseada em jogos realizados</div>
     </div>
   `;
 }
@@ -695,6 +723,7 @@ async function initApp() {
   });
 
   updateHeroStats();
+  renderTodayMatches();
   renderMatches();
   renderStandings();
   renderTopScorers();

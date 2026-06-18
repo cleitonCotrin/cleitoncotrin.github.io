@@ -380,6 +380,103 @@ body {
   66% { transform: translate(-20px, 20px) scale(0.95); }
 }
 
+.today-section {
+  padding: 24px 0 0;
+}
+
+.today-section .section-title {
+  margin-bottom: 16px;
+}
+
+.today-list {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+
+.today-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 20px;
+  min-width: 180px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  color: var(--text-primary);
+  scroll-snap-align: start;
+  transition: all var(--transition-base);
+  flex-shrink: 0;
+}
+
+.today-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--border-light);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.today-card--live {
+  border-color: var(--green);
+  box-shadow: 0 0 0 1px var(--green), var(--shadow-glow);
+}
+
+.today-card--past {
+  opacity: 0.8;
+}
+
+.today-card--past:hover {
+  opacity: 1;
+}
+
+.today-team {
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+
+.today-flag {
+  font-size: 1.1rem;
+}
+
+.today-score {
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.today-time {
+  font-size: 0.6875rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+}
+
+.today-time--live {
+  color: var(--green);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.today-time--live::before {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
 .matches-section {
   padding: 60px 0;
 }
