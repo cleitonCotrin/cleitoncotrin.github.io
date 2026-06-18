@@ -1039,6 +1039,25 @@ body {
   color: var(--text-primary);
 }
 
+.footer-links {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.footer-links a {
+  color: var(--text-tertiary);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  transition: color var(--transition-fast);
+}
+
+.footer-links a:hover {
+  color: var(--accent-primary);
+}
+
 .footer-text {
   color: var(--text-tertiary);
   font-size: 0.8125rem;

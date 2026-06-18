@@ -348,21 +348,22 @@ function renderMatchCard(m) {
 
   const detailUrl = `jogo.html?slug=${encodeURIComponent(m.slug)}`;
 
+  const ariaLabel = `${m.home} × ${m.away} — ${m.phase} — ${scoreText} — ${m.timeLabel || ''}`;
   return `
-    <a href="${detailUrl}" class="${classes}" style="animation-delay:${((m.num || m.idx) % 10) * 40}ms;text-decoration:none;color:inherit;display:grid;">
+    <a href="${detailUrl}" class="${classes}" style="animation-delay:${((m.num || m.idx) % 10) * 40}ms;text-decoration:none;color:inherit;display:grid;" aria-label="${ariaLabel}">
       <div class="match-team match-team--home">
         <span class="match-team-name">${m.home}</span>
-        <span class="match-team-flag">${getFlag(m.home)}</span>
+        <span class="match-team-flag" aria-hidden="true">${getFlag(m.home)}</span>
       </div>
       <div class="match-center">
         <span class="match-phase">${m.phase}</span>
-        <div class="match-score ${scoreClass}">${scoreText}</div>
+        <div class="match-score ${scoreClass}" aria-label="Placar: ${scoreText}">${scoreText}</div>
         <div class="match-time ${live ? 'match-time--live' : ''}">${live ? 'Ao Vivo' : m.timeLabel || ''}</div>
         <div class="match-venue">${m.venue}</div>
         <div class="match-watch-btn">${!past ? 'Assistir' : 'Detalhes'}</div>
       </div>
       <div class="match-team match-team--away">
-        <span class="match-team-flag">${getFlag(m.away)}</span>
+        <span class="match-team-flag" aria-hidden="true">${getFlag(m.away)}</span>
         <span class="match-team-name">${m.away}</span>
       </div>
     </a>
@@ -403,16 +404,16 @@ function renderStandings() {
         <div class="standings-card-header">
           <span>Grupo ${group.id}</span>
         </div>
-        <table class="standings-table">
+        <table class="standings-table" aria-label="Classificação do Grupo ${group.id}">
           <thead>
             <tr>
-              <th>#</th>
-              <th>Time</th>
-              <th>P</th>
-              <th>V</th>
-              <th>E</th>
-              <th>D</th>
-              <th>SG</th>
+              <th scope="col">#</th>
+              <th scope="col">Time</th>
+              <th scope="col">P</th>
+              <th scope="col">V</th>
+              <th scope="col">E</th>
+              <th scope="col">D</th>
+              <th scope="col">SG</th>
             </tr>
           </thead>
           <tbody>
@@ -421,7 +422,7 @@ function renderStandings() {
                 <td><span class="standings-pos standings-pos--${i + 1}">${i + 1}</span></td>
                 <td>
                   <div class="team-cell">
-                    <span class="team-flag">${getFlag(t.name)}</span>
+                    <span class="team-flag" aria-hidden="true">${getFlag(t.name)}</span>
                     ${t.name}
                     ${i < 2 && hasMatches ? '<span style="margin-left:auto;font-size:0.625rem;color:var(--green);background:var(--green-bg);padding:1px 6px;border-radius:100px;font-weight:600;">Zona</span>' : ''}
                   </div>
@@ -452,17 +453,17 @@ function renderTopScorers() {
   const medals = ['🥇', '🥈', '🥉'];
 
   container.innerHTML = `
-    <div class="scorers-podium">
+    <div class="scorers-podium" aria-label="Artilheiros da competição">
       ${top.map((p, i) => {
         const position = i;
         const isFirst = i === 0;
         return `
-          <div class="scorer-card ${isFirst ? 'scorer-card--gold' : ''}">
-            <div class="scorer-medal">${medals[i]}</div>
+          <div class="scorer-card ${isFirst ? 'scorer-card--gold' : ''}" aria-label="${i+1}º lugar: ${p.name} — ${p.goals} gol${p.goals > 1 ? 's' : ''}">
+            <div class="scorer-medal" aria-hidden="true">${medals[i]}</div>
             <div class="scorer-position">${i + 1}º</div>
             <div class="scorer-name">${p.name}</div>
             <div class="scorer-team">
-              <span class="team-flag">${getFlag(p.team)}</span>
+              <span class="team-flag" aria-hidden="true">${getFlag(p.team)}</span>
               ${p.team}
             </div>
             <div class="scorer-goals">
@@ -672,7 +673,7 @@ async function initApp() {
   setupGroupFilters();
 
   const container = document.getElementById('matchesContainer');
-  container.innerHTML = `<div class="loading-state"><div class="loader"></div><p>Carregando dados oficiais da Copa 2026...</p></div>`;
+  container.innerHTML = `<div class="loading-state"><div class="loader" aria-hidden="true"></div><p>Carregando dados oficiais da Copa 2026...</p></div>`;
 
   const raw = await fetchData();
   if (!raw) {

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Página não encontrada — Copa do Mundo 2026</title>
+  <meta name="description" content="A página que você procura não existe. Volte para a página inicial da Copa do Mundo 2026.">
+  <meta name="robots" content="noindex, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <style>
+    .error-page { display:flex; flex-direction:column; align-items:center; justify-content:center; min-height:100vh; text-align:center; padding:40px 20px; }
+    .error-code { font-size:clamp(5rem,15vw,10rem); font-weight:900; font-family:var(--font-mono); background:var(--accent-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; line-height:1; }
+    .error-title { font-size:1.5rem; font-weight:700; margin:16px 0 8px; }
+    .error-desc { color:var(--text-secondary); max-width:480px; margin-bottom:32px; }
+    .error-btn { display:inline-flex; align-items:center; gap:8px; padding:12px 28px; background:var(--accent-primary); color:#fff; border-radius:var(--radius-md); font-weight:600; text-decoration:none; transition:opacity var(--transition-fast); }
+    .error-btn:hover { opacity:0.9; }
+  </style>
+</head>
+<body>
+  <main class="error-page" role="main">
+    <div class="error-code">404</div>
+    <h1 class="error-title">Página não encontrada</h1>
+    <p class="error-desc">A página que você procura não existe, foi movida ou está temporariamente indisponível.</p>
+    <a href="/" class="error-btn">&larr; Voltar para o início</a>
+  </main>
+  <script defer>const t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+</body>
+</html>
