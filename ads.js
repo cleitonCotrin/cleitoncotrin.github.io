@@ -1,6 +1,6 @@
 const ADSENSE = {
-  enabled: false,
-  publisherId: '',
+  enabled: true,
+  publisherId: 'ca-pub-1538326960915004',
   slotIds: {
     banner_top: 'ad-banner-top',
     banner_mid: 'ad-banner-mid',
