@@ -593,11 +593,20 @@ function renderStats() {
 }
 
 function updateHeroStats() {
-  const played = state.data.filter(m => m.score);
+  const total = state.data ? state.data.length : 0;
+  const played = state.data ? state.data.filter(m => m.score) : [];
   const totalGoals = played.reduce((sum, m) => sum + m.score.home + m.score.away, 0);
-  document.getElementById('totalMatches').textContent = state.data.length;
+  document.getElementById('totalMatches').textContent = total;
   document.getElementById('totalGoals').textContent = totalGoals;
   document.getElementById('playedMatches').textContent = played.length;
+
+  const pct = total > 0 ? (played.length / total) * 100 : 0;
+  const fill = document.getElementById('progressFill');
+  const thumb = document.getElementById('progressThumb');
+  const label = document.getElementById('progressLabel');
+  if (fill) fill.style.width = pct + '%';
+  if (thumb) thumb.style.left = pct + '%';
+  if (label) label.textContent = `${played.length} de ${total} jogos realizados (${Math.round(pct)}%)`;
 }
 
 function setupFilters() {
@@ -706,6 +715,7 @@ async function initApp() {
   const raw = await fetchData();
   if (!raw) {
     container.innerHTML = `<div class="loading-state"><p style="color:var(--red);font-size:1.125rem;">Erro ao carregar dados</p><p style="color:var(--text-tertiary);">Tente recarregar a página</p></div>`;
+    updateHeroStats();
     return;
   }
 

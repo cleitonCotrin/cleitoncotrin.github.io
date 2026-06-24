@@ -380,6 +380,51 @@ body {
   66% { transform: translate(-20px, 20px) scale(0.95); }
 }
 
+.hero-progress {
+  margin-top: 32px;
+  max-width: 480px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.hero-progress-track {
+  position: relative;
+  height: 6px;
+  background: var(--border-color);
+  border-radius: 3px;
+  overflow: visible;
+}
+
+.hero-progress-fill {
+  height: 100%;
+  background: var(--accent-gradient);
+  border-radius: 3px;
+  transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  width: 0%;
+}
+
+.hero-progress-thumb {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.25rem;
+  line-height: 1;
+  left: 0%;
+  transition: left 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  filter: drop-shadow(0 0 6px rgba(59, 130, 246, 0.4));
+  pointer-events: none;
+}
+
+.hero-progress-label {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+  font-size: 0.8125rem;
+  color: var(--text-tertiary);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
 .today-section {
   padding: 24px 0 0;
 }
